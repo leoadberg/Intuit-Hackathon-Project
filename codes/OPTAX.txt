@@ -1,0 +1,8 @@
+00, Wholesale Trade
+10, Merchant wholesalers, except manufacturers' sales branches and offices
+20, Manufacturers' sales branches and offices
+99, Total
+A, All establishments
+T, Establishments subject to federal income tax
+N, Establishments exempt from federal income tax (2002 and earlier)
+Y, Establishments exempt from federal income tax (Starting in 2007)

@@ -1,4 +1,3 @@
-FIPS Code	State or District
 01	Alabama
 02	Alaska
 04	Arizona
