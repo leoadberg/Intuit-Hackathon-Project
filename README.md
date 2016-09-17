@@ -9,7 +9,7 @@ college and is looking for a new career.
 Leo Adberg, Thanatcha Panpairoj, Amir Shahatit, Alex Bondarenko
 
 ####HOW TO START THIS PROJECT: 
-<li> </li>
+<li> Go to leo.adberg.com </li>
 <li> </li>
 <li> </li>
 <li> </li>
