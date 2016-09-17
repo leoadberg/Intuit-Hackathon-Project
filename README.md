@@ -1,17 +1,19 @@
-#Intuit Hackathon Submission
+#Intuit Hackathon
 
-####PURPOSE: 
+####PURPOSE:
+Use the US Census data to creat a predictive model to project salaries. Use these
+predictions to create a service that would be beneficial to a user who recently graduated
+college and is looking for a new career. 
 
-####AUTHORS: 
-
-####CONTRIBUTORS:
+####AUTHORS:
+Leo Adberg, Thanatcha Panpairoj, Amir Shahatit, Alex Bondarenko
 
 ####HOW TO START THIS PROJECT: 
-<li>1. </li>
-<li>2. </li>
-<li>3. </li>
-<li>4. </li>
-<li>5. </li>
-<li>6. </li>
+<li> </li>
+<li> </li>
+<li> </li>
+<li> </li>
+<li> </li>
+<li> </li>
 </ol>
 
