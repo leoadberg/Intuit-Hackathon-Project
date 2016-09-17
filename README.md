@@ -1,4 +1,4 @@
-#[JumboJobs](leo.adberg.com)
+#[JumboJobs](http://leo.adberg.com)
 
 ####PURPOSE:
 Use the US Census data to create a predictive model to project salaries. Use these
