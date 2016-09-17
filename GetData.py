@@ -74,11 +74,15 @@ prediction = int(prediction[-1])
 
 statesToSearch = [StateToFIPS(x) for x in states]
 allData = {}
+allData2002 = {}
 
 for code in naics:
 	with open('data/2012/'+code+".txt") as data_file:    
 		data = json.load(data_file)
 		allData[code] = data
+	with open('data/2002/'+code+".txt") as data_file2:    
+		data2 = json.load(data_file2)
+		allData2002[code] = data2
 
 #print(allData)
 #0/0
@@ -89,6 +93,7 @@ PAYANN = list(allData.values())[0][0].index('PAYANN')
 STATE = list(allData.values())[0][0].index('state')
 COUNTY = list(allData.values())[0][0].index('county')
 EMP = list(allData.values())[0][0].index('EMP')
+NAICSYEAR = 3 #Kinda hardcoded in
 for code in allData:
 	for x in allData[code][1:]:
 		#state = FIPSToState(x[output[0].index('state')])
@@ -98,30 +103,57 @@ for code in allData:
 		else:
 			averagePay = int(x[PAYANN]) * 1000 / int(x[EMP])
 		if averagePay >= minSalary and averagePay <= maxSalary:
-			thisEntry = []
-			state = FIPSToState(x[STATE])
-			county = FIPSToCounty(x[STATE], x[COUNTY])
-			#Industry = x[allData[code][0].index('NAICS2012_TTL')]
-			Industry = "temp"
-			#print("In state: "+state)
-			#print("In county: "+county)
-			#print("Industry: "+Industry)
-			#print("Average pay: $"+locale.format("%d", averagePay, grouping=True))
-			thisEntry.append(state)
-			thisEntry.append(county)
-			thisEntry.append(Industry)
-			thisEntry.append(averagePay)
-			finalData.append(thisEntry)
+			state = x[STATE]
+			if FIPSToState(state) in states:
+				thisEntry = []
+				county = x[COUNTY]
+				#Industry = x[allData[code][0].index('NAICS2012_TTL')]
+				Industry = x[NAICSYEAR]
+				employees = int(x[EMP])
+				#print("In state: "+state)
+				#print("In county: "+county)
+				#print("Industry: "+Industry)
+				#print("Average pay: $"+locale.format("%d", averagePay, grouping=True))
+				thisEntry.append(state)
+				thisEntry.append(county)
+				thisEntry.append(Industry)
+				thisEntry.append(employees)
+				thisEntry.append(averagePay)
+				finalData.append(thisEntry)
 
 # Sort all entries by average pay
-finalData = sorted(finalData, key = lambda x: -x[3])
-
-#print(finalData)
+finalData = sorted(finalData, key = lambda x: -x[3])[0:20]
 
 for entry in finalData:
-	print("In state: "+entry[0])
-	print("In county: "+entry[1])
-	print("Industry: "+entry[2])
-	print("Average pay: $"+locale.format("%d", entry[3], grouping=True))
+	jobs = allData2002[entry[2]][1:]
+	alreadyappended = False
+	for x in jobs:
+		if int(x[STATE]) == int(entry[0]) and int(x[COUNTY]) == int(entry[1]):
+			if not alreadyappended:
+				annual = int(x[PAYANN])
+				employees = int(x[EMP])
+			alreadyappended = True
+	if not alreadyappended or employees == 0:
+		entry.append(0)
+		entry.append(0)
+	else:
+		entry.append(int(annual * 1000 / employees))
+		entry.append(employees)
 
+
+
+
+print(finalData)
+
+for entry in finalData:
+	print("In state: "+FIPSToState(entry[0]))
+	print("In county: "+FIPSToCounty(entry[0], entry[1]))
+	print("Industry: "+NAICSToIndustry(entry[2]))
+	print("2002 Average Pay: $"+locale.format("%d", entry[5], grouping=True))
+	print("2012 Average pay: $"+locale.format("%d", entry[4], grouping=True))
+	print("Projected Avg. Pay in "+str(2016+prediction)+": $" + locale.format("%d", (entry[4] - entry[5]) / 10 * (2016 + prediction - 2012) + entry[4], grouping=True))
+	if entry[6] == 0:
+		print("Employee growth per year: Unknown")
+	else:
+		print("Employee growth per year: "+ str(((entry[3] - entry[6]) / entry[6] * 10)) + "%")
 

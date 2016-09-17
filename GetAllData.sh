@@ -1,5 +1,5 @@
 IFS=$'\r\n' GLOBIGNORE='*' command eval  'XYZ=($(cat data/listOfCodes.txt))'
-years=("2002" "2007" "2012")
+years=("2002" "2012")
 for year in "${years[@]}"
 do
 for i in "${XYZ[@]}"

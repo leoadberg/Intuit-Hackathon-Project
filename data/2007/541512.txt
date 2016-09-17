@@ -1,1 +1,0 @@
-error: wildcard not allowed for 'state' in geography heirarchy
