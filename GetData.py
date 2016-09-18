@@ -59,6 +59,9 @@ minSalary = int(minSalary[-1])
 maxSalary = int(maxSalary[-1])
 prediction = int(prediction[-1])
 
+if len(sys.argv) <= 4:
+	sys.exit()
+
 
 # Set up API query
 #dataToGet = "PAYANN,ESTAB,EMP,NAICS2012_TTL,GEO_TTL"
@@ -143,17 +146,26 @@ for entry in finalData:
 
 
 
-print(finalData)
+#print(finalData)
 
 for entry in finalData:
-	print("In state: "+FIPSToState(entry[0]))
-	print("In county: "+FIPSToCounty(entry[0], entry[1]))
+	#print("In state: "+FIPSToState(entry[0]))
+	#print("In county: "+FIPSToCounty(entry[0], entry[1]))
+
+	print(FIPSToCounty(entry[0], entry[1]) + ", " + FIPSToState(entry[0]))
+	print('<br>')
 	print("Industry: "+NAICSToIndustry(entry[2]))
+	print('<br>')
 	print("2002 Average Pay: $"+locale.format("%d", entry[5], grouping=True))
+	print('<br>')
 	print("2012 Average pay: $"+locale.format("%d", entry[4], grouping=True))
+	print('<br>')
 	print("Projected Avg. Pay in "+str(2016+prediction)+": $" + locale.format("%d", (entry[4] - entry[5]) / 10 * (2016 + prediction - 2012) + entry[4], grouping=True))
+	print('<br>')
 	if entry[6] == 0:
 		print("Employee growth per year: Unknown")
 	else:
-		print("Employee growth per year: "+ str(((entry[3] - entry[6]) / entry[6] * 10)) + "%")
-
+		print("Employee growth per year: "+ locale.format("%.2f", ((entry[3] - entry[6]) / entry[6] * 10)) + "%")
+	print("\n")
+	print('<br>')
+	print('<br>')
